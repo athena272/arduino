@@ -28,7 +28,7 @@ void loop() {
      Serial.println("PROFESSORA LINDA!");
  }
  else{
-     Serial.println("Error404(Not Found)");
+     Serial.println("Error404(Not Found). Aperte o botão! AGORA!");
  }
  delay(1000);
 }
