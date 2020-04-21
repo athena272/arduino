@@ -15,7 +15,7 @@ void setup() {
   // Declarar o pino 13 como saída(OUTPUT)
   pinMode(exemploBotao, OUTPUT);
   //Declar o pino 10 como entrada(INPUT)
-  pinMode(outroexemploBotao, INPUT);
+  pinMode(outroexemploBotao, OUTPUT);
   // Inicializar a porta serial
   Serial.begin(9600);
 }
@@ -25,10 +25,10 @@ void setup() {
 // pela serial escrever 'H' se o botão estiver está sendo pressionado
 void loop() {
  if (digitalRead(outroexemploBotao) == HIGH ){
-     Serial.write('H');
+     Serial.println("PROFESSORA LINDA!");
  }
  else{
-     Serial.write('L');
+     Serial.println("Error404(Not Found)");
  }
  delay(1000);
 }
