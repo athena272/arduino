@@ -1,9 +1,14 @@
+/*
+*1ª) Para cada caractere enviado ao Arduino, esse programa faz com que o Arduino imprima de volta o código correspondente (e novamente o caractere). 
+*A) Qual o código correspondente ao ‘{‘?
+*
+ */
 void setup() {
   Serial.begin(9600);  // inicializa comunicação serial (9600 bits/s)
 }
 
 void loop() {
-  delay (10);          // (somente para a simulação) 
+  delay (100);          // (somente para a simulação) 
   byte n = 0;          // declara variável n, e inicializa com valor 0
   char c;              // declara variável c (não inicializa)
 
