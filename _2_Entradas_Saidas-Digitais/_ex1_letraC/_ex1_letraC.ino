@@ -34,7 +34,7 @@ void loop() {
      digitalWrite(LED_1, LOW); //Desliga o LED
     delay(1000);
   }
-  else{ //Se não
+  else{ //Se não 
   digitalWrite(LED_1, LOW);//Desliga o LED
   }
 }
