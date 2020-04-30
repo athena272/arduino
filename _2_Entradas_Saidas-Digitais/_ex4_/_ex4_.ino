@@ -28,5 +28,5 @@ void loop() {
     digitalWrite(LED_1, LOW); //Desliga o LED
   }
   //-------------------------PRINTS-----------------------------------
-  Serial.println(Maiusculas_acende);   
+  Serial.print(Maiusculas_acende);   
 }
