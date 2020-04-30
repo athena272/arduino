@@ -16,18 +16,17 @@ void loop() {
   char Maiusculas_acende; 
   byte Conversao_ASCII = Maiusculas_acende;
   
-  delay(500);
+  delay(1500);
   if ( Serial.available() > 0 ){ 
-    Maiusculas_acende = Serial.read();      
-    Serial.print(Maiusculas_acende);   
-    Serial.print("|");
-    Serial.println( Conversao_ASCII);
-  //------------------------------------------
+  Maiusculas_acende = Serial.read();      
   }
+  //------------------------------------------
   if (Conversao_ASCII >= 65 and Conversao_ASCII <= 90){ //Qualquer valor no range A-Z
   digitalWrite(LED_1, HIGH); //Acende o LED
   } 
   else if (Conversao_ASCII >= 97 and Conversao_ASCII <= 122){ //Qualquer valor no range a-z
     digitalWrite(LED_1, LOW); //Desliga o LED
   }
+  //-------------------------PRINTS-----------------------------------
+  Serial.println(Maiusculas_acende);   
 }
