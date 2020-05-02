@@ -29,7 +29,7 @@ void loop() {
   Serial.print("Temperatura = ");
   Serial.print(C); 
   Serial.println("°C(Celsius)");
-  if(C >= 27.50){
+  if(C >= 27.50){ //Coloquei 27.5 no lugar de 60, porque assim, o LED nunca ia acender
     digitalWrite(LED_1, HIGH);
   }
   else{
