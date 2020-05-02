@@ -16,11 +16,13 @@ void setup() {
   pinMode(LED_1, OUTPUT); //configura pino 13 como saída
   pinMode(LED_2, OUTPUT); //configura pino 12 como saída
   pinMode(LED_3, OUTPUT); //configura pino 11 como saída
+  Serial.begin(9600); //Inicia monitor serial para visualizar os dados
 }
 void loop() {
   delay(100); //Intervalo para os dados serem melhores processados
   // put your main code here, to run repeatedly:
   int valor_POT = analogRead(Potenciometro);
+  Serial.println(valor_POT); //Imprimir valor recebi pela Porta A0 no monitor serial
   if(valor_POT <= 341){  
     digitalWrite(LED_1, HIGH);
   }
