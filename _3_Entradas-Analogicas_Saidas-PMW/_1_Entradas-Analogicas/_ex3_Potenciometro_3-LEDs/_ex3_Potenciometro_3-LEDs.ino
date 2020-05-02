@@ -19,7 +19,7 @@ void setup() {
   Serial.begin(9600); //Inicia monitor serial para visualizar os dados
 }
 void loop() {
-  delay(100); //Intervalo para os dados serem melhores processados
+  delay(250); //Intervalo para os dados serem melhores processados
   // put your main code here, to run repeatedly:
   int valor_POT = analogRead(Potenciometro);
   Serial.println(valor_POT); //Imprimir valor recebi pela Porta A0 no monitor serial
