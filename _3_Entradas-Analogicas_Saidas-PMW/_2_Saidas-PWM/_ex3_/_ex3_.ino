@@ -1,9 +1,12 @@
 /* ------------SAÍDAS PWM----------------
 * O programa fará com que o brilho do LED conectado ao pino 11 aumente gradativamente. 
 * O LED no pino 12 foi aceso somente para que você possa comparar visualmente o brilho dos dois…
------------------------Exercício 3 A:-----------------------------------
-*A) Considere agora o Arduino conectado a 1 LED, no pino 11, e a dois botões, nos pinos 5 e 4:
-*Faça com que um dos botões aumente o brilho do LED, e o outro diminua.
+-----------------------Exercício 3 A e B:-----------------------------------
+*-- Considere agora o Arduino conectado a 1 LED, no pino 11, e a dois botões, nos pinos 5 e 4:
+* Faça com que um dos botões aumente o brilho do LED, e o outro diminua.
+*
+*--cuide para que o acionamento dos botões não ultrapassem os limites (0 a 255)
+
 */
 const byte LED_1 = 11; //Declaração para o led
 const byte BUTTON_mais = 5; //Declaração para o botão que aumentará o brilho
@@ -22,11 +25,15 @@ void loop() {
   //Fazer o brilho aumentar ou diminuir com base em codições
   if (digitalRead(BUTTON_mais) == true){
       analogWrite(LED_1, aumentar);
-      aumentar++;
+      if (aumentar != 255){
+        aumentar++;
+      }       
   }  
   if (digitalRead(BUTTON_menos) == true){
       analogWrite(LED_1, aumentar);
-      aumentar--; 
+      if (aumentar != 0){
+         aumentar--;
+      }
   }
   Serial.println(aumentar);
 }
