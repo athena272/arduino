@@ -1,72 +1,44 @@
 //------Vetores e Laços--------------
-const byte Leds[3] = {13, 12, 11};
-const byte Botao[2] = {7, 6};
+/*
+Na questão anterior, o acionamento do LED indicador 
+foi controlado pelo valor analógico de um potenciômetro. 
+Faça a mesma funcionalidade, agora controlando com 
+dois botões digitais: a cada pulso no botão[1], 
+o LED ativo desloca-se para a direita (+1), 
+e a cada pulso no botão[0], o LED ativo desloca-se 
+para a esquerda (-1).
+*/
+
+
+//Variáveis Globais
+const byte led[8] = {13, 12, 11, 10, 9, 8, 7, 6};  //Pinos LEDS
+const byte btn[2] = {5, 4}; //Pinos Buttons
+
 void setup() {
-  Serial.begin(9600);
-  //Declaraçao leds
-  byte led;
-  for(led =0; led <= 2; led++){
-    pinMode(Leds[led], OUTPUT);
+  for(byte dl = 0; dl <= 7; dl++){ //Declaração de LEDS
+    pinMode(led[dl], OUTPUT);
   }
-  //Declaração botão
-  byte b;
-  for(b = 0; b <= 1; b++){
-    pinMode(Botao[b], INPUT);
+  for(byte db = 0; db <= 1; db++){ //Declaração de Buttons
+    pinMode(btn[db], INPUT);
   }
-  
+  Serial.begin(9600); //Iniciar Simulador
 }
-
-void loop() {
-  byte i;
-  static byte s_b = 0;
-  for(i = 0; i <= 1; i++){
-    delay(115);
-    if(digitalRead(Botao[0]) == true)
-      if(s_b == 0){
-          s_b = 2;
-      }
-      else{
-          s_b -= 1;   
-      }
-    
-    if(digitalRead(Botao[1]) == true)
-      if(s_b == 2){
-        s_b = 0;
-      }
-      else{
-        s_b += 1;
-      }
-      Serial.println(s_b);
-  } 
-    switch(s_b){
-        case 0:
-          if(s_b == 0){
-            //ligar
-            digitalWrite(Leds[0], HIGH);
-            //Desligar
-            digitalWrite(Leds[1], LOW);
-            digitalWrite(Leds[2], LOW);
-          }
-          break;
-        case 1:
-           if(s_b == 1){
-            //ligar
-            digitalWrite(Leds[1], HIGH);
-            //Desligar
-            digitalWrite(Leds[0], LOW);
-            digitalWrite(Leds[2], LOW);
-          }
-          break;
-        
-        case 2:
-           if(s_b == 2){
-            //ligar
-            digitalWrite(Leds[2], HIGH);
-            //Desligar
-            digitalWrite(Leds[1], LOW);
-            digitalWrite(Leds[0], LOW);
-          }
-          break;
+void loop(){
+    for(int i = -1; i <= 6; i++){
+      if(digitalRead(btn[1]) == true){
+        digitalWrite(led[i], LOW);
+        digitalWrite(led[i + 1], HIGH);
+        //Monitorar a posição do led
+        Serial.print("Posição de Led[0-7]: ");
+        Serial.println(i + 1);
+      }  
     }
-
+    for(int i = 1; i <= 8; i++){
+      if(digitalRead(btn[0]) == true){
+        digitalWrite(led[i], LOW);
+        digitalWrite(led[i - 1], HIGH);
+        Serial.print("Posição de Led[0-7]: ");
+        Serial.println(i - 1);
+      }  
+    }
 }

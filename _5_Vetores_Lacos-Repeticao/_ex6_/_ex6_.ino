@@ -16,22 +16,21 @@ faça: pot = valor analógico do potenciômetro
 
 */
 const byte Potenciometro = A0;
-const byte Leds[3] = {13, 12, 11}; 
+const byte Leds[8] = {13, 12, 11, 10, 9, 8, 7, 6}; 
 void setup() {
   byte pinDecla;
   Serial.begin(9600);
   //Declaracao de Leds
-  for(pinDecla = 0; pinDecla <= 2; pinDecla++){
+  for(pinDecla = 0; pinDecla <= 7; pinDecla++){
       pinMode(Leds[pinDecla], OUTPUT);
   }   
 }
 
 void loop() {
-  byte pot = analogRead(Potenciometro);
-  byte i;
+  int pot = analogRead(Potenciometro);
   Serial.println(pot);
-  for(i = 0; i <= 2; i++){
-      if(i == (pot / 85)){
+  for(byte i = 0; i <= 7; i++){
+      if(i == (pot / 128)){
         digitalWrite(Leds[i], HIGH);
       } 
       else{

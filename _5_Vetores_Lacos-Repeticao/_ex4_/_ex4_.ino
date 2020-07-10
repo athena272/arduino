@@ -14,104 +14,50 @@
 */
 
 //Declaração de variávies globais
-const byte Leds[8] = {13, 12, 11, 10, 9, 8, 7, 6};
+const byte led[8] = {13, 12, 11, 10, 9, 8, 7, 6};
 
 void setup() {    
     Serial.begin(9600); // Iniciar Monitor Serial
     //Declaracao de 8 pinos com "for";
     byte pinDeclaracao;
     for(pinDeclaracao = 0; pinDeclaracao <= 7; pinDeclaracao++){
-        pinMode(Leds[pinDeclaracao], OUTPUT);
+        pinMode(led[pinDeclaracao], OUTPUT);
       }
 }
 void loop() {
-    
-  char Maiusculas_acende; 
-  
-  
-  delay(100);
+   //Receita de bolo para receber dados no monitor 
+  char M_acende; 
   if ( Serial.available() > 0 ){ 
-  Maiusculas_acende = Serial.read(); 
-  //-------------------------PRINTS-----------------------------------
-  Serial.println(Maiusculas_acende);   
+  M_acende = Serial.read(); //Variavel que vai receber dados do monitor serial
+  //-------------------------PRINTS-----------------------------------     
+  Serial.println(M_acende); //Imprimir o que foi digitado
   }
   
-  byte Conversao_ASCII = Maiusculas_acende;
-
+  //Fim Receita de Bolo
   //------------------------------------------
-  byte posicaoLed;
-  for(posicaoLed = 0; posicaoLed <= 7; posicaoLed++){
-    
-      switch(posicaoLed){
-             
-        case 0:
-              if(Conversao_ASCII == 'A'){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == 'a'){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-        case 1:
-              if(Conversao_ASCII == ('A' + 1)){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == ('a' + 1)){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-       case 2:
-              if(Conversao_ASCII == ('A' + 2)){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == ('a' + 2)){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-       case 3:
-              if(Conversao_ASCII == ('A' + 3)){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == ('a' + 3)){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-       case 4:
-              if(Conversao_ASCII == ('A' + 4)){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == ('a' + 4)){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-        case 5:
-              if(Conversao_ASCII == ('A' + 5)){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == ('a' + 5)){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-        case 6:
-              if(Conversao_ASCII == ('A' + 6)){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == ('a' + 6)){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-        case 7:
-              if(Conversao_ASCII == ('A' + 7)){
-                 digitalWrite(Leds[posicaoLed], HIGH);  
-              }
-              else if (Conversao_ASCII == ('a' + 7)){
-                 digitalWrite(Leds[posicaoLed], LOW);
-              }          
-              break;
-      }
-
-
-     
+  //Acender LEDS com maiúsculas
+  for(char i = 'A'; i <= 'H'; i++){ //Loop com base nas letras Maisculas
+    for(byte posled = 0; posled <= 7; posled++){ //Posição dos leds em relação a letra correspondente 
+        if(i == M_acende && (i - 'A') == posled){
+          digitalWrite(led[posled], HIGH);
+          Serial.print(i); //Imprimir a variavel "i" do loop
+          Serial.print('|');
+          Serial.println(posled); //Imprimir a pos do led que será aceso
+          Serial.println("---------");
+        }
+    }
   }
-
+  //Apagar Leds com minusculas
+  for(char j = 'a'; j <= 'h'; j++){
+    for(byte posled = 0; posled <= 7; posled++){
+        if(j == M_acende && (j - 'a') == posled){
+          digitalWrite(led[posled], LOW);
+          Serial.print(j); //Imprimir a variavel j do loop
+          Serial.print('|');
+          Serial.println(posled); //Imprimir pos do led que irá apagar
+          Serial.println("---------");
+        }
+    }
+  }
+  
 }

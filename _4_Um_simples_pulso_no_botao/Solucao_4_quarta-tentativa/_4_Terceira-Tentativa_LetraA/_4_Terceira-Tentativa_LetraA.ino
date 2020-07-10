@@ -16,6 +16,7 @@ switch / case e implemente o código
 para a MEF descrita acima.
 */
 
+
 // Declarações Globais
 const byte LED_1   = 13;           // declara constante LED1   = 13
 const byte BOTAO_1 =  5;           // declara constante BOTAO1 =  5
@@ -27,22 +28,24 @@ void setup() {
 }
 
 void loop() {
-
-  bool estado = digitalRead(BOTAO_1);
-
- switch (estado){
-      
-      case 0:
-           if (estado == 1){
-              digitalWrite(LED_1, ! digitalRead(LED_1));
-              estado = 1;
-            }
-            break;
-     case 1:
-           if (estado == false){
-              estado = 0;
-            }
-            break;
- }
- delay(10);
-} 
+  bool bt = digitalRead(BOTAO_1);
+  static bool estado_futuro = 0;    
+  
+  delay(10);
+  
+  switch(estado_futuro){
+    case 0:
+      if (bt == 1 && estado_futuro == 0){
+          digitalWrite(LED_1, ! digitalRead(LED_1));
+          estado_futuro = 1;
+      }
+      break;
+    case 1:
+      if(bt == 0 && estado_futuro == 1){
+        estado_futuro = 0;
+      }   
+      break;
+  }
+  Serial.print(bt);
+  Serial.println(estado_futuro);
+}  

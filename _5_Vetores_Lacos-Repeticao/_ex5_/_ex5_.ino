@@ -13,87 +13,53 @@ quantos botões estão pressionados,
 e depois, outro laço for para ativar / desativar os LEDs, 
 de acordo com a contagem.
 */
-//Declaração Global
-byte Leds[3] = {13, 12, 11};
-byte Botao [3] = {7, 6, 5};
-
+const byte led[3] = {13, 12, 11};
+const byte button[3] = {7, 6, 5};
+  
 void setup() {
-  byte btnDecla;
-  byte ledDecla;
-
+  //Declarar led
+  byte dl; //variavel declarar led
+  for(dl = 0; dl <= 2; dl++){
+     pinMode(led[dl], OUTPUT);
+  }
+  //Declarar botão
+  byte db; //variável declarar botão
+  for(db = 0; db <= 2; db++){
+      pinMode(button[db], INPUT);  
+  }
+  //Iniciar monitor Serial
   Serial.begin(9600);
-  //------------
-  //For declaração Leds
-  for(ledDecla = 0; ledDecla <= 2; ledDecla++){
-      pinMode(Leds[ledDecla], OUTPUT);
-  }
-  //For declaração btn
-  for(btnDecla = 0; btnDecla <= 2; btnDecla++){
-      pinMode(Botao[btnDecla], INPUT);
-  }
 }
 
 void loop() {
-  static byte n_b;
-  byte quantos;
-  bool estado;
-  for(n_b = 0; n_b <= 2; n_b++){
-    delay(10);
-    bool estado_0 = digitalRead(Botao[0]);
-    bool estado_1 = digitalRead(Botao[1]);
-    bool estado_2 = digitalRead(Botao[2]);
-      if(estado_0 == 0 && estado_1 == 0 && estado_2 == 0){
-        quantos = 0;
-      }
-      if(estado_0 == true && estado_1 == true && estado_2 == true){
-        quantos = 3;
-      }
-      else if((estado_0 == true && estado_1 == true) or (estado_0 == true && estado_2 == true) or (estado_1 == true && estado_2 == true)){
-        quantos = 2; 
-      }
-      else if(estado_0 == true or estado_1 == true or estado_2 == true){
-        quantos = 1;
-      }
-      
-      
-      Serial.println(quantos);
-    switch(quantos){
-    case 0:
-          //Desligar
-            digitalWrite(Leds[0], LOW);
-            digitalWrite(Leds[1], LOW);
-            digitalWrite(Leds[2], LOW);
-    case 1:
-      if(quantos == 1){
-            //Ligar
-            digitalWrite(Leds[0], HIGH);
-            //Desligar
-            digitalWrite(Leds[1], LOW);
-            digitalWrite(Leds[2], LOW);
-        }
-      break;
-    case 2:
-      if(quantos == 2){
-            //Ligar
-            digitalWrite(Leds[1], HIGH);
-            //Desligar
-            digitalWrite(Leds[0], LOW);
-            digitalWrite(Leds[2], LOW);
-        }
-      break;
-  case 3:
-      if(quantos == 3){
-            //Ligar
-            digitalWrite(Leds[2], HIGH);
-            //Desligar
-            digitalWrite(Leds[0], LOW);
-            digitalWrite(Leds[1], LOW);
-        }
-      break;
-    
+  //Laço para botões pressionados
+  byte lista_estados[3]; //Variável para guardar 3 estados em um array
+  //Loop encontrar estados
+  for(byte n_b = 0; n_b <= 2; n_b++){ //numero de botões, variavel de loop
+     //Ler estado dos botão
+     bool estadoY = digitalRead(button[n_b]); //Ler estado do botão
+     lista_estados[n_b] = estadoY; //Adicionar o estado no array(lista)
   }
+  //Esse loop faz a soma interna no array
+  byte soma = 0;
+  for(byte i = 0; i <= 2; i++){
+       soma += lista_estados[i]; //Aqui está o valor da soma interna do array
   }
-  
-  
-       
+  if(soma > 0){ //se pelo um botõa estiver pressionado
+    for(byte y = 0; y <= 2; y++){ //Loop para apagar leds
+     digitalWrite(led[y], LOW);
+     digitalWrite(led[soma - 1], HIGH); 
+     //mas deixa um led acesso que tem a quantia de buttons menos 1, para achar pos LED do certo
+    }
+  }
+  else{ //Se for igual a zero(nenhum botão pressionado)
+      for(byte j = 0; j <= 2; j++){ //Loop apaga geral, sem exceção
+          digitalWrite(led[j], LOW); 
+      }
+  }  
+  //--------------PRINTS--------------------
+  Serial.print(soma); //numero de botões pressionados
+  Serial.print("||");
+  Serial.println(soma - 1); //Posição do led a ser acesso
 }
+ 
